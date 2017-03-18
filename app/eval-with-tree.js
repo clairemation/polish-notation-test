@@ -1,10 +1,12 @@
 const operate = require('./polish-operation.js');
 
-function buildTree(valArray){
-  var i = 0;
+function buildTree(array){
+  var i = 0,
+  arrayLength = array.length;
   function Tree(){
-    this.val = valArray[i++];
-    if (!this.val.match(/d/)){
+    this.val = array[i++];
+    // If number, no children. If operation, children are next 2 expressions.
+    if (!this.val.match(/\d/)){
       this.left =  new Tree();
       this.right = new Tree();
     }
@@ -13,14 +15,13 @@ function buildTree(valArray){
 }
 
 function evaluateTree(node){
-  if (node.val.match(/d/)){
-    return node.val;
-  }
-    return operate(node.val, evaluateTree(node.left), evaluateTree(node.right));
+  // If number, return own value. If operation, perform on child tree values and return result.
+  return (node.val.match(/\d/)) ? parseFloat(node.val) : operate(node.val, evaluateTree(node.left), evaluateTree(node.right));
 }
 
-function evaluateArray(arr){
-  return evaluateTree(buildTree(arr));
+function evaluateArray(array){
+  // console.log(array)
+  return evaluateTree(buildTree(array));
 }
 
 module.exports = evaluateArray;
