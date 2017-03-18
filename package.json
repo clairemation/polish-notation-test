@@ -1,0 +1,19 @@
+{
+  "name": "rockerbox-prefix-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./app/index.js",
+  "scripts": {
+    "test": "jasmine ./app/spec/index-spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^2.5.3",
+    "jasmine-async": "0.0.1",
+    "jasmine-node": "^1.14.5",
+    "node-libs-browser": "^2.0.0",
+    "path": "^0.12.7"
+  }
+}
