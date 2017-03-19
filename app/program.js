@@ -6,7 +6,7 @@ module.exports = function(filename){
     readFile(filename).then(
       (data) => {
         try {
-          var result = processData(data).join('\n');
+          var result = processData(data);
           resolve(result);
         }
         catch(e){

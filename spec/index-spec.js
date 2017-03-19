@@ -3,7 +3,7 @@ const TEST_INPUT = './spec/test-input',
   program = require('../app/program.js'),
   readFile = require('../app/read-file.js'),
   processData = require('../app/process-data.js'),
-  // Two alternate implementations of the evaluation algorithm
+  // Two alternate implementations of the evaluation algorithm:
   evaluateWithStackAlgo = require('../app/eval-with-stack.js'),
   evaluateWithTreeAlgo = require('../app/eval-with-tree.js');
 
@@ -77,7 +77,7 @@ describe('Program', () => {
   it('should evaluate a series of prefix operations inside a file', () => {
     return program(TEST_INPUT).then(
       (success) => {
-        expect(success).toBe("7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20");
+        expect(success).toEqual([ 7, 12, 0.75, 20, 20, 7, 12, 0.75, 20, 20, 7, 12, 0.75, 20, 20, 7, 12, 0.75, 20, 20, 7, 12, 0.75, 20, 20, 7, 12, 0.75, 20, 20, 7, 12, 0.75, 20, 20, 7, 12, 0.75, 20, 20 ]);
       },
       (error) => {
         expect(`\n${error.message} \n\ at ${error.stack} \n`).toBeUndefined();
