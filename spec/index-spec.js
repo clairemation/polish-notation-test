@@ -28,17 +28,20 @@ operationTests(evaluateWithStack);
 function operationTests(evaluate){
   describe('Operations', () => {
     it('should add', () => {
-      expect(evaluate(['+', '2.5', '2'])).toBe(4.5);
+      expect(evaluate(['+', '4', '2'])).toBe(6);
     });
     it('should multiply', () => {
-      expect(evaluate(['*', '2.5', '2'])).toBe(5);
+      expect(evaluate(['*', '4', '2'])).toBe(8);
     });
     it('should divide', () => {
-      expect(evaluate(['/', '2.5', '2'])).toBe(1.25);
+      expect(evaluate(['/', '4', '2'])).toBe(2);
     });
     it('should handle different-length tokens', () => {
-      expect(evaluate(['+', '2', '40.5'])).toBe(42.5);
+      expect(evaluate(['+', '4', '200'])).toBe(204);
     });
+    it('should handle a single-token expression', () => {
+      expect(evaluate(['1'])).toBe(1);
+    })
     it('should handle compound expressions', () => {
       expect(evaluate(['*', '+', '2', '/', '12', '3', '4'])).toBe(24);
     });

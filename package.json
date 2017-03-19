@@ -4,8 +4,9 @@
   "description": "",
   "main": "./app/index.js",
   "scripts": {
-    "exec": "node ./app/index.js ./spec/test-input",
-    "test": "jasmine-node node_modules/jasmine-test-helpers/lib/ ./spec/index-spec.js"
+    "exec": "node ./app/index.js",
+    "jasmine": "jasmine-node node_modules/jasmine-test-helpers/lib/ ./spec/index-spec.js",
+    "test": "node ./app/index.js ./spec/test-input",
   },
   "keywords": [],
   "author": "Claire Samuels",
