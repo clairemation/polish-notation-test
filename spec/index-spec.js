@@ -1,7 +1,7 @@
 const PATH = '../app/';
 function pathify(name){ return PATH + name + '.js'};
 const arrayify = require(pathify('arrayify')),
-  cli = require(pathify('cli')),
+  program = require(pathify('program')),
   readFile = require(pathify('read-file')),
   processData = require(pathify('process-data')),
   // Two alternate implementations of the evaluation algorithm
@@ -10,9 +10,8 @@ const arrayify = require(pathify('arrayify')),
 
 describe('File input', () => {
   it('should return data from specified file', () => {
-    return readFile("./spec/test-input").then(
+    return readFile('./spec/test-input').then(
       (success) => {
-        console.log(success)
         expect(success).not.toBeUndefined();
       },
       (error) => {
