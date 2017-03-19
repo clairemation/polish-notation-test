@@ -2,10 +2,20 @@ const readFile = require('./read-file.js'),
   processData = require('./process-data.js');
 
 module.exports = function(filename){
-  readFile(filename).then((data) => {
-    var result = processData(data).join('\n');
-    return(console.log(result));
-  }).catch((e) => {
-    return console.log(e);
+  return new Promise((resolve, reject) => {
+    readFile(filename).then(
+      (data) => {
+        try {
+          var result = processData(data).join('\n');
+          resolve(result);
+        }
+        catch(e){
+          reject(new Error(e));
+        }
+      },
+      (error) => {
+        reject(new Error(error));
+      }
+    );
   });
 };

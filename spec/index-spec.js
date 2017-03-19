@@ -1,52 +1,45 @@
-const PATH = '../app/';
-function pathify(name){ return PATH + name + '.js'};
-const arrayify = require(pathify('arrayify')),
-  program = require(pathify('program')),
-  readFile = require(pathify('read-file')),
-  processData = require(pathify('process-data')),
+const TEST_INPUT = './spec/test-input',
+  arrayify = require('../app/arrayify.js'),
+  program = require('../app/program.js'),
+  readFile = require('../app/read-file.js'),
+  processData = require('../app/process-data.js'),
   // Two alternate implementations of the evaluation algorithm
-  evaluateWithStackAlgo = require(pathify('eval-with-stack')),
-  evaluateWithTreeAlgo = require(pathify('eval-with-tree'));
+  evaluateWithStackAlgo = require('../app/eval-with-stack.js'),
+  evaluateWithTreeAlgo = require('../app/eval-with-tree.js');
 
 describe('File input', () => {
   it('should return data from specified file', () => {
-    return readFile('./spec/test-input').then(
+    return readFile(TEST_INPUT).then(
       (success) => {
-        expect(success).not.toBeUndefined();
+        expect(success).toBe('+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2');
       },
       (error) => {
-        expect(error).toBeUndefined();
+        expect(error.message).toBeUndefined();
       }
     );
   });
-  // it('should return an error if file not found', () => {
-  //   return readFile('FAKEPATH', () => true).then(
-  //     (success) => {
-  //       expect(success).toBeUndefined();
-  //     },
-  //     (error) => {
-  //       expect(error).not.toBeUndefined();
-  //     }
-  //   );
-  // });
+  it('should return an error if file not found', () => {
+    return readFile('#', () => true).then(
+      (success) => {
+        expect(success).toBeUndefined();
+      },
+      (error) => {
+        expect(error.message).not.toBeUndefined();
+      }
+    );
+  });
 });
 
 describe('Arrayify', () => {
   it('should convert a string into an array of test case arrays', () => {
-    testArrayify('+ 3 4\n* 5 6');
+    expect(arrayify('+ 3 4\n* 5 6')).toEqual([ [ '+', '3', '4' ], [ '*', '5', '6' ] ]);
   });
   it('should handle a string with a single line', () => {
-    testArrayify('+ 3 4');
+    expect(arrayify('+ 3 4')).toEqual([['+', '3', '4']]);
   });
   it('should handle a string with 40 lines', () => {
-    testArrayify('+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2');
+    expect(arrayify('+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2\n+ 3 4\n* 3 4\n/ 3 4\n* + 2 3 4\n* 4 + 3 2')).toEqual([ [ '+', '3', '4' ], [ '*', '3', '4' ], [ '/', '3', '4' ], [ '*', '+', '2', '3', '4' ], [ '*', '4', '+', '3', '2' ], [ '+', '3', '4' ], [ '*', '3', '4' ], [ '/', '3', '4' ], [ '*', '+', '2', '3', '4' ], [ '*', '4', '+', '3', '2' ], [ '+', '3', '4' ], [ '*', '3', '4' ], [ '/', '3', '4' ], [ '*', '+', '2', '3', '4' ], [ '*', '4', '+', '3', '2' ], [ '+', '3', '4' ], [ '*', '3', '4' ], [ '/', '3', '4' ], [ '*', '+', '2', '3', '4' ], [ '*', '4', '+', '3', '2' ], [ '+', '3', '4' ], [ '*', '3', '4' ], [ '/', '3', '4' ], [ '*', '+', '2', '3', '4' ], [ '*', '4', '+', '3', '2' ], [ '+', '3', '4' ], [ '*', '3', '4' ], [ '/', '3', '4' ], [ '*', '+', '2', '3', '4' ], [ '*', '4', '+', '3', '2' ], [ '+', '3', '4' ], [ '*', '3', '4' ], [ '/', '3', '4' ], [ '*', '+', '2', '3', '4' ], [ '*', '4', '+', '3', '2' ], [ '+', '3', '4' ], [ '*', '3', '4' ], [ '/', '3', '4' ], [ '*', '+', '2', '3', '4' ], [ '*', '4', '+', '3', '2' ] ]);
   });
-  function testArrayify(str){
-    var results = arrayify(str);
-    expect(Array.isArray(results)).toBe(true);
-    var elementsAreArrays = results.reduce((prev, current) => prev && Array.isArray(current), true);
-    expect(elementsAreArrays).toBe(true);
-  }
 });
 
 operationTests(evaluateWithStackAlgo, 'Stack operations');
@@ -79,3 +72,16 @@ function operationTests(evaluate, name){
     });
   });
 }
+
+describe('Program', () => {
+  it('should evaluate a series of prefix operations inside a file', () => {
+    return program(TEST_INPUT).then(
+      (success) => {
+        expect(success).toBe("7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20\n7\n12\n0.75\n20\n20");
+      },
+      (error) => {
+        expect(`\n${error.message} \n\ at ${error.stack} \n`).toBeUndefined();
+      }
+    );
+  })
+})
