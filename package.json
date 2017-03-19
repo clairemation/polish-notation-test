@@ -4,16 +4,16 @@
   "description": "",
   "main": "./app/index.js",
   "scripts": {
-    "test": "jasmine ./app/spec/index-spec.js"
+    "exec": "node ./app/index.js ./spec/test-input",
+    "test": "jasmine-node node_modules/jasmine-test-helpers/lib/ ./spec/index-spec.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Claire Samuels",
   "license": "ISC",
   "devDependencies": {
     "jasmine": "^2.5.3",
-    "jasmine-async": "0.0.1",
     "jasmine-node": "^1.14.5",
-    "node-libs-browser": "^2.0.0",
+    "jasmine-test-helpers": "^1.2.0",
     "path": "^0.12.7"
   }
 }
